@@ -1,9 +1,18 @@
 #:import screens ui.screens
+#:import app kivy.app.App
 
 <ScreenManager>:
     TerminalScreen:
     AIScreen:
     MCPScreen:
+
+# Alt Navigasyon Butonu Şablonu
+<NavButton@Button>:
+    background_normal: ''
+    background_color: 0.15, 0.15, 0.15, 1
+    color: 0.8, 0.8, 0.8, 1
+    font_size: '14sp'
+    bold: True
 
 <TerminalScreen>:
     name: 'terminal'
@@ -12,43 +21,68 @@
     
     BoxLayout:
         orientation: 'vertical'
-        padding: 10
-        spacing: 10
         
-        Label:
-            text: '[ TERMINAL FORGE ]'
-            font_size: '24sp'
-            size_hint_y: 0.1
-            bold: True
-            
-        TextInput:
-            id: code_input
-            hint_text: 'Write Python code here...'
-            size_hint_y: 0.4
-            font_name: 'RobotoMono'
-            
         BoxLayout:
-            size_hint_y: 0.1
+            orientation: 'vertical'
+            padding: 10
             spacing: 10
-            Button:
-                text: 'RUN'
-                background_color: 0.2, 0.8, 0.2, 1
-                on_press: root.run_code()
-            Button:
-                text: 'HEAL (AI)'
-                background_color: 0.8, 0.2, 0.8, 1
-                on_press: root.heal_code()
-                
-        ScrollView:
-            size_hint_y: 0.4
+            
             Label:
-                id: output_label
-                text: 'Output will appear here...'
-                size_hint_y: None
-                height: self.texture_size[1]
-                text_size: self.width, None
-                halign: 'left'
-                valign: 'top'
+                text: '[ TERMINAL FORGE ]'
+                font_size: '22sp'
+                size_hint_y: 0.08
+                bold: True
+                color: 0, 1, 0, 1
+                
+            TextInput:
+                id: code_input
+                hint_text: 'Write Python code here...'
+                size_hint_y: 0.4
+                background_color: 0.1, 0.1, 0.1, 1
+                foreground_color: 0, 1, 0, 1
+                
+            BoxLayout:
+                size_hint_y: 0.08
+                spacing: 10
+                Button:
+                    text: 'RUN'
+                    background_color: 0.2, 0.6, 0.2, 1
+                    on_press: root.run_code()
+                Button:
+                    text: 'HEAL (AI)'
+                    background_color: 0.6, 0.2, 0.6, 1
+                    on_press: root.heal_code()
+                    
+            ScrollView:
+                size_hint_y: 0.36
+                canvas.before:
+                    Color:
+                        rgba: 0.05, 0.05, 0.05, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Label:
+                    id: output_label
+                    text: 'Output will appear here...'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    text_size: self.width, None
+                    halign: 'left'
+                    valign: 'top'
+                    color: 0.8, 0.8, 0.8, 1
+
+        # Alt Navigasyon Barı
+        BoxLayout:
+            size_hint_y: 0.08
+            NavButton:
+                text: 'TERMINAL'
+                background_color: 0.2, 0.5, 0.8, 1
+            NavButton:
+                text: 'AGENT'
+                on_release: app.get_running_app().switch_screen('ai')
+            NavButton:
+                text: 'MCP'
+                on_release: app.get_running_app().switch_screen('mcp')
 
 <AIScreen>:
     name: 'ai'
@@ -57,41 +91,88 @@
     
     BoxLayout:
         orientation: 'vertical'
-        padding: 10
-        spacing: 10
         
-        Label:
-            text: '[ AGENT MODE ]'
-            font_size: '24sp'
-            size_hint_y: 0.1
-            bold: True
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 10
+            spacing: 10
             
-        TextInput:
-            id: task_input
-            hint_text: 'e.g., "make a snake game with pygame"'
-            size_hint_y: 0.15
-            
-        Button:
-            text: 'DEPLOY AGENT'
-            size_hint_y: 0.1
-            background_color: 0.2, 0.6, 0.9, 1
-            on_press: root.run_agent()
-            
-        ScrollView:
-            size_hint_y: 0.65
             Label:
-                id: plan_output
-                text: 'Agent plan will appear here...'
-                size_hint_y: None
-                height: self.texture_size[1]
-                text_size: self.width, None
-                halign: 'left'
-                valign: 'top'
+                text: '[ AGENT MODE ]'
+                font_size: '22sp'
+                size_hint_y: 0.08
+                bold: True
+                color: 1, 0.5, 0, 1
+                
+            TextInput:
+                id: task_input
+                hint_text: 'e.g., "make a snake game with pygame"'
+                size_hint_y: 0.12
+                background_color: 0.1, 0.1, 0.1, 1
+                foreground_color: 1, 1, 1, 1
+                
+            Button:
+                text: 'DEPLOY AGENT'
+                size_hint_y: 0.08
+                background_color: 0.8, 0.4, 0.1, 1
+                on_press: root.run_agent()
+                
+            ScrollView:
+                size_hint_y: 0.64
+                canvas.before:
+                    Color:
+                        rgba: 0.05, 0.05, 0.05, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Label:
+                    id: plan_output
+                    text: 'Agent plan will appear here...'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    text_size: self.width, None
+                    halign: 'left'
+                    valign: 'top'
+                    color: 0.8, 0.8, 0.8, 1
+
+        # Alt Navigasyon Barı
+        BoxLayout:
+            size_hint_y: 0.08
+            NavButton:
+                text: 'TERMINAL'
+                on_release: app.get_running_app().switch_screen('terminal')
+            NavButton:
+                text: 'AGENT'
+                background_color: 0.2, 0.5, 0.8, 1
+            NavButton:
+                text: 'MCP'
+                on_release: app.get_running_app().switch_screen('mcp')
 
 <MCPScreen>:
     name: 'mcp'
     BoxLayout:
         orientation: 'vertical'
-        Label:
-            text: '[ MCP BRIDGE ]\nGitHub & Tools Integration\n(Coming in Batch 2)'
-            font_size: '20sp'
+        
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20
+            Label:
+                text: '[ MCP BRIDGE ]\n\nGitHub & Filesystem Tools\nActive and Listening...'
+                font_size: '20sp'
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.width, self.height
+                color: 0, 0.8, 0.8, 1
+
+        # Alt Navigasyon Barı
+        BoxLayout:
+            size_hint_y: 0.08
+            NavButton:
+                text: 'TERMINAL'
+                on_release: app.get_running_app().switch_screen('terminal')
+            NavButton:
+                text: 'AGENT'
+                on_release: app.get_running_app().switch_screen('ai')
+            NavButton:
+                text: 'MCP'
+                background_color: 0.2, 0.5, 0.8, 1
