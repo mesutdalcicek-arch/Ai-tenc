@@ -1,4 +1,3 @@
-
 import threading
 import uvicorn
 from kivy.app import App
