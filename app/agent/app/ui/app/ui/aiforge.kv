@@ -1,0 +1,97 @@
+#:import screens ui.screens
+
+<ScreenManager>:
+    TerminalScreen:
+    AIScreen:
+    MCPScreen:
+
+<TerminalScreen>:
+    name: 'terminal'
+    code_input: code_input
+    output_label: output_label
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        
+        Label:
+            text: '[ TERMINAL FORGE ]'
+            font_size: '24sp'
+            size_hint_y: 0.1
+            bold: True
+            
+        TextInput:
+            id: code_input
+            hint_text: 'Write Python code here...'
+            size_hint_y: 0.4
+            font_name: 'RobotoMono'
+            
+        BoxLayout:
+            size_hint_y: 0.1
+            spacing: 10
+            Button:
+                text: 'RUN'
+                background_color: 0.2, 0.8, 0.2, 1
+                on_press: root.run_code()
+            Button:
+                text: 'HEAL (AI)'
+                background_color: 0.8, 0.2, 0.8, 1
+                on_press: root.heal_code()
+                
+        ScrollView:
+            size_hint_y: 0.4
+            Label:
+                id: output_label
+                text: 'Output will appear here...'
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                halign: 'left'
+                valign: 'top'
+
+<AIScreen>:
+    name: 'ai'
+    task_input: task_input
+    plan_output: plan_output
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        
+        Label:
+            text: '[ AGENT MODE ]'
+            font_size: '24sp'
+            size_hint_y: 0.1
+            bold: True
+            
+        TextInput:
+            id: task_input
+            hint_text: 'e.g., "make a snake game with pygame"'
+            size_hint_y: 0.15
+            
+        Button:
+            text: 'DEPLOY AGENT'
+            size_hint_y: 0.1
+            background_color: 0.2, 0.6, 0.9, 1
+            on_press: root.run_agent()
+            
+        ScrollView:
+            size_hint_y: 0.65
+            Label:
+                id: plan_output
+                text: 'Agent plan will appear here...'
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                halign: 'left'
+                valign: 'top'
+
+<MCPScreen>:
+    name: 'mcp'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: '[ MCP BRIDGE ]\nGitHub & Tools Integration\n(Coming in Batch 2)'
+            font_size: '20sp'
